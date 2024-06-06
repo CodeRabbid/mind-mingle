@@ -11,8 +11,10 @@
     "typescript": "5.4.5"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "bcryptjs": "^2.4.3",
     "graphql-scalars": "^1.23.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.1",
