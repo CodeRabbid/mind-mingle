@@ -9,8 +9,9 @@ import {
 } from "type-graphql";
 import { User } from "./entity/User";
 import { compare, hash } from "bcryptjs";
-import { sign } from "jsonwebtoken";
+
 import { MyContext } from "./MyContext";
+import { createAccessToken, createRefreshToken } from "./auth";
 
 @ObjectType()
 class LoginResponse {
@@ -66,12 +67,12 @@ export class UserResolver {
       throw new Error("wrong password");
     }
 
-    res.cookie("jid", sign({ userId: user.id }, "secret124"), {
+    res.cookie("jid", createRefreshToken(user), {
       httpOnly: true,
     });
 
     return {
-      accessToken: sign({ userId: user.id }, "secret123", { expiresIn: "15m" }),
+      accessToken: createAccessToken(user),
     };
   }
 }

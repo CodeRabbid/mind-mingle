@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import "reflect-metadata";
@@ -11,6 +12,7 @@ import cors from "cors";
   app.get("/", (_req, res) => {
     res.send("hello");
   });
+
   app.use(
     cors({
       credentials: true,
