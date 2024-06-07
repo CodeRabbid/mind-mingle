@@ -50,7 +50,7 @@ import { createAccessToken } from "./auth";
   app.use(
     cors({
       credentials: true,
-      origin: "https://studio.apollographql.com",
+      origin: "http://localhost:5173",
     })
   );
   await AppDataSource.initialize();
