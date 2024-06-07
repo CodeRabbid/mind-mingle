@@ -1,5 +1,6 @@
 import {
   Arg,
+  Ctx,
   Field,
   Mutation,
   ObjectType,
@@ -9,6 +10,7 @@ import {
 import { User } from "./entity/User";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { MyContext } from "./MyContext";
 
 @ObjectType()
 class LoginResponse {
@@ -49,7 +51,8 @@ export class UserResolver {
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email") email: string,
-    @Arg("password") password: string
+    @Arg("password") password: string,
+    @Ctx() { res }: MyContext
   ): Promise<LoginResponse> {
     const user = await User.findOne({ where: { email } });
 
@@ -62,6 +65,10 @@ export class UserResolver {
     if (!valid) {
       throw new Error("wrong password");
     }
+
+    res.cookie("jid", sign({ userId: user.id }, "secret124"), {
+      httpOnly: true,
+    });
 
     return {
       accessToken: sign({ userId: user.id }, "secret123", { expiresIn: "15m" }),
