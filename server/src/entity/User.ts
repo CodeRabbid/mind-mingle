@@ -9,10 +9,10 @@ export class User extends BaseEntity {
   id: number;
 
   @Field()
-  @Column("text")
+  @Column()
   email: string;
 
-  @Column("text")
+  @Column()
   password: string;
 
   @Column("int", { default: 0 })
