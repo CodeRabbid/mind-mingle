@@ -2,6 +2,7 @@ import {
   Arg,
   Ctx,
   Field,
+  Int,
   Mutation,
   ObjectType,
   Query,
@@ -14,6 +15,7 @@ import { compare, hash } from "bcryptjs";
 import { MyContext } from "./MyContext";
 import { createAccessToken, createRefreshToken } from "./auth";
 import { isAuth } from "./isAuth";
+import { getConnection } from "typeorm";
 
 @ObjectType()
 class LoginResponse {
@@ -30,7 +32,7 @@ export class UserResolver {
 
   @Query(() => String)
   @UseMiddleware(isAuth)
-  bye(@Ctx() { payload }: MyContext) { 
+  bye(@Ctx() { payload }: MyContext) {
     return `Your user Id is ${payload?.userId}`;
   }
 
@@ -39,6 +41,14 @@ export class UserResolver {
     return User.find();
   }
 
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg("userId", () => Int) userId: number) {
+    await getConnection()
+      .getRepository(User)
+      .increment({ id: userId }, "tokenVersion", 1);
+
+    return true;
+  }
   @Mutation(() => Boolean)
   async register(
     @Arg("email") email: string,

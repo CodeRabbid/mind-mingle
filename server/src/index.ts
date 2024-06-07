@@ -38,6 +38,9 @@ import { createAccessToken } from "./auth";
       where: [{ id: payload.userId }],
     });
 
+    if (user?.tokenVersion !== payload.tokenVersion) {
+      return res.send({ ok: false, accessToken: "" });
+    }
     if (!user) {
       return res.send({ ok: false, accessToken: "" });
     }
