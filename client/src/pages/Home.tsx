@@ -1,4 +1,3 @@
-import React from "react";
 import { useUsersQuery } from "../generated/graphql";
 
 export default function Home() {

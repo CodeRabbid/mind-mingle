@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoginMutation, useRegisterMutation } from "../generated/graphql";
+import { useLoginMutation } from "../generated/graphql";
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
