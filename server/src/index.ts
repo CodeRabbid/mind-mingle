@@ -13,6 +13,16 @@ import { createAccessToken } from "./auth";
 
 (async () => {
   const app = express();
+  app.use(
+    cors({
+      credentials: true,
+      origin: [
+        "http://localhost:5173",
+        "https://studio.apollographql.com",
+        "http://localhost:4000/graphql",
+      ],
+    })
+  );
   app.use(cookieParser());
   app.get("/", (_req, res) => {
     res.send("hello");
@@ -47,16 +57,6 @@ import { createAccessToken } from "./auth";
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
-  app.use(
-    cors({
-      credentials: true,
-      origin: [
-        "http://localhost:5173",
-        "https://studio.apollographql.com",
-        "http://localhost:4000/graphql",
-      ],
-    })
-  );
   await AppDataSource.initialize();
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
