@@ -18,7 +18,7 @@ const Bye: React.FC = () => {
   }
   console.log(data);
 
-  return <div>{}</div>;
+  return <div>{data.bye}</div>;
 };
 
 export default Bye;

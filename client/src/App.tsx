@@ -15,7 +15,6 @@ function App() {
     })
       .then((x) => x.json())
       .then((y) => {
-        console.log(y.accessToken);
         setAccessToken(y.accessToken);
         setLoading(false);
       }),
