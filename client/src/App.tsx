@@ -1,18 +1,13 @@
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "@apollo/client";
+import { useHelloQuery } from "./generated/graphql";
 
 function App() {
-  const { data, loading } = useQuery(gql`
-    {
-      hello
-    }
-  `);
+  const { data, loading } = useHelloQuery();
 
-  if (loading) return <div>loading</div>;
+  if (loading || !data) return <div>loading</div>;
 
   return (
     <>
-      <div>{JSON.stringify(data)}</div>
+      <div>{data.hello}</div>
     </>
   );
 }
