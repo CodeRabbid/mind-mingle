@@ -70,13 +70,7 @@ import { createAccessToken } from "./auth";
   await apolloServer.start();
   apolloServer.applyMiddleware({
     app,
-    cors: {
-      credentials: true,
-      origin: [
-        "https://studio.apollographql.com",
-        "http://localhost:4000/graphql",
-      ],
-    },
+    cors: false,
   });
   app.listen(4000, () => {
     console.log("express server started");
