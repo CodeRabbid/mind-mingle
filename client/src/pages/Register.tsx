@@ -1,15 +1,23 @@
 import React, { useState } from "react";
+import { useRegisterMutation } from "../generated/graphql";
+import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+const Register: React.FC = () => {
+  const [register] = useRegisterMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        console.log("form sumbitted");
-        console.log(email);
-        console.log(password);
+        await register({
+          variables: {
+            email,
+            password,
+          },
+        });
+        navigate("/");
       }}
     >
       <div>
@@ -37,4 +45,6 @@ export default function Register() {
       </div>
     </form>
   );
-}
+};
+
+export default Register;
