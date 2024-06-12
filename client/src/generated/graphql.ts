@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
+import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -70,6 +71,10 @@ export type User = {
   id: Scalars["Int"]["output"];
 };
 
+export type ByeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ByeQuery = { __typename?: "Query"; bye: string };
+
 export type HelloQueryVariables = Exact<{ [key: string]: never }>;
 
 export type HelloQuery = { __typename?: "Query"; hello: string };
@@ -98,186 +103,57 @@ export type UsersQuery = {
   users: Array<{ __typename?: "User"; id: number; email: string }>;
 };
 
-export const HelloDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "Hello" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [{ kind: "Field", name: { kind: "Name", value: "hello" } }],
-      },
-    },
-  ],
-} as unknown as DocumentNode<HelloQuery, HelloQueryVariables>;
-export const LoginDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "Login" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "password" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "email" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "login" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "password" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "password" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "email" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "email" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "accessToken" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
-export const RegisterDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "Register" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "password" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "email" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "register" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "password" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "password" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "email" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "email" },
-                },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
-export const UsersDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "Users" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "users" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "email" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<UsersQuery, UsersQueryVariables>;
+export const ByeDocument = gql`
+  query Bye {
+    bye
+  }
+`;
+
+/**
+ * __useByeQuery__
+ *
+ * To run a query within a React component, call `useByeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useByeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useByeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useByeQuery(
+  baseOptions?: Apollo.QueryHookOptions<ByeQuery, ByeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ByeQuery, ByeQueryVariables>(ByeDocument, options);
+}
+export function useByeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ByeQuery, ByeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ByeQuery, ByeQueryVariables>(ByeDocument, options);
+}
+export function useByeSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<ByeQuery, ByeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<ByeQuery, ByeQueryVariables>(
+    ByeDocument,
+    options
+  );
+}
+export type ByeQueryHookResult = ReturnType<typeof useByeQuery>;
+export type ByeLazyQueryHookResult = ReturnType<typeof useByeLazyQuery>;
+export type ByeSuspenseQueryHookResult = ReturnType<typeof useByeSuspenseQuery>;
+export type ByeQueryResult = Apollo.QueryResult<ByeQuery, ByeQueryVariables>;
+export const HelloDocument = gql`
+  query Hello {
+    hello
+  }
+`;
 
 /**
  * __useHelloQuery__
@@ -330,7 +206,13 @@ export type HelloQueryResult = Apollo.QueryResult<
   HelloQuery,
   HelloQueryVariables
 >;
-
+export const LoginDocument = gql`
+  mutation Login($password: String!, $email: String!) {
+    login(password: $password, email: $email) {
+      accessToken
+    }
+  }
+`;
 export type LoginMutationFn = Apollo.MutationFunction<
   LoginMutation,
   LoginMutationVariables
@@ -372,7 +254,11 @@ export type LoginMutationOptions = Apollo.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
 >;
-
+export const RegisterDocument = gql`
+  mutation Register($password: String!, $email: String!) {
+    register(password: $password, email: $email)
+  }
+`;
 export type RegisterMutationFn = Apollo.MutationFunction<
   RegisterMutation,
   RegisterMutationVariables
@@ -414,6 +300,14 @@ export type RegisterMutationOptions = Apollo.BaseMutationOptions<
   RegisterMutation,
   RegisterMutationVariables
 >;
+export const UsersDocument = gql`
+  query Users {
+    users {
+      id
+      email
+    }
+  }
+`;
 
 /**
  * __useUsersQuery__

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLoginMutation } from "../generated/graphql";
 import { useNavigate } from "react-router-dom";
+import { accessToken, setAccessToken } from "../accessToken";
 
 const Login: React.FC = () => {
   const [login] = useLoginMutation();
@@ -17,7 +18,10 @@ const Login: React.FC = () => {
             password,
           },
         });
-        console.log(response);
+        if (response && response.data) {
+          setAccessToken(response.data.login.accessToken);
+        }
+
         navigate("/");
       }}
     >
