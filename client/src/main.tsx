@@ -9,7 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 import { jwtDecode } from "jwt-decode";
 
 import App from "./App.tsx";
-import { accessToken, getAccessToken, setAccessToken } from "./accessToken.ts";
+import { getAccessToken, setAccessToken } from "./accessToken.ts";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",

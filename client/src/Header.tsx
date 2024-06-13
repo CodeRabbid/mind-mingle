@@ -3,8 +3,17 @@ import React from "react";
 import { useMeQuery } from "./generated/graphql";
 
 const Header: React.FC = () => {
-  const { data, error } = useMeQuery({ fetchPolicy: "network-only" });
-  console.log(data);
+  const { data, loading } = useMeQuery();
+
+  let body: any = null;
+
+  if (loading) {
+    body = <div>loading...</div>;
+  } else if (data && data.me) {
+    body = <div>You are logged in as {data.me.email}</div>;
+  } else {
+    body = <div>not logged in</div>;
+  }
 
   return (
     <header>
@@ -20,11 +29,7 @@ const Header: React.FC = () => {
       <div>
         <Link to="/bye">Bye</Link>
       </div>
-      {data && data.me ? (
-        <div>You are logged in as {data.me.email}</div>
-      ) : (
-        <div>not logged in</div>
-      )}
+      {body}
     </header>
   );
 };

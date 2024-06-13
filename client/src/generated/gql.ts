@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "query Bye {\n  bye\n}": types.ByeDocument,
     "query Hello {\n  hello\n}": types.HelloDocument,
-    "mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n  }\n}": types.LoginDocument,
+    "mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n    user {\n      id\n      email\n    }\n  }\n}": types.LoginDocument,
     "query Me {\n  me {\n    id\n    email\n  }\n}": types.MeDocument,
     "mutation Register($password: String!, $email: String!) {\n  register(password: $password, email: $email)\n}": types.RegisterDocument,
     "query Users {\n  users {\n    id\n    email\n  }\n}": types.UsersDocument,
@@ -46,7 +46,7 @@ export function graphql(source: "query Hello {\n  hello\n}"): (typeof documents)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n  }\n}"): (typeof documents)["mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n  }\n}"];
+export function graphql(source: "mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n    user {\n      id\n      email\n    }\n  }\n}"): (typeof documents)["mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n    user {\n      id\n      email\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
