@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Bye from "./pages/Bye";
 import { useEffect, useState } from "react";
-import { accessToken, setAccessToken } from "./accessToken";
+import { setAccessToken } from "./accessToken";
+import Header from "./Header";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,20 +27,7 @@ function App() {
   }
   return (
     <BrowserRouter>
-      <header>
-        <div>
-          <Link to="/">Home</Link>
-        </div>
-        <div>
-          <Link to="/register">Register</Link>
-        </div>
-        <div>
-          <Link to="/login">Login</Link>
-        </div>
-        <div>
-          <Link to="/bye">Bye</Link>
-        </div>
-      </header>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/register" element={<Register />}></Route>
