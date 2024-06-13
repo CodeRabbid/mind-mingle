@@ -6,24 +6,42 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { jwtDecode } from "jwt-decode";
 
 import App from "./App.tsx";
-import { getAccessToken } from "./accessToken.ts";
-// import { ApolloProvider } from "@apollo/react-hooks";
+import { accessToken, getAccessToken, setAccessToken } from "./accessToken.ts";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
+  credentials: "include",
 });
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = getAccessToken();
-  console.log(token);
-  // return the headers to the context so httpLink can read them
+const authLink = setContext(async (_, { headers }) => {
+  let accessToken = getAccessToken();
+  let refreshAccessToken = false;
+  try {
+    const { exp } = jwtDecode(accessToken);
+    if (Date.now() >= exp! * 1000) {
+      refreshAccessToken = true;
+    }
+  } catch {
+    refreshAccessToken = true;
+  }
+  if (refreshAccessToken) {
+    const x = await fetch("http://localhost:4000/refresh_token", {
+      method: "POST",
+      credentials: "include",
+    });
+    const y = await x.json();
+    setAccessToken(y.accessToken);
+  }
+
+  accessToken = getAccessToken();
+
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: accessToken ? `Bearer ${accessToken}` : "",
     },
   };
 });

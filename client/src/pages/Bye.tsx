@@ -2,7 +2,9 @@ import React from "react";
 import { useByeQuery } from "../generated/graphql";
 
 const Bye: React.FC = () => {
-  const { data, error, loading } = useByeQuery();
+  const { data, error, loading } = useByeQuery({
+    fetchPolicy: "network-only",
+  });
 
   if (loading) {
     return <div>loading...</div>;
@@ -16,7 +18,6 @@ const Bye: React.FC = () => {
   if (!data) {
     return <div>no data</div>;
   }
-  console.log(data);
 
   return <div>{data.bye}</div>;
 };
