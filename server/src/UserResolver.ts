@@ -68,6 +68,14 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  async logout(@Ctx() { res }: MyContext) {
+    res.cookie("jid", "", {
+      httpOnly: true,
+    });
+    return true;
+  }
+
+  @Mutation(() => Boolean)
   async revokeRefreshTokensForUser(@Arg("userId", () => Int) userId: number) {
     await getConnection()
       .getRepository(User)
@@ -75,6 +83,7 @@ export class UserResolver {
 
     return true;
   }
+
   @Mutation(() => Boolean)
   async register(
     @Arg("email") email: string,
