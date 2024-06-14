@@ -54,8 +54,6 @@ export class UserResolver {
     try {
       const token = authorization?.split(" ")[1];
       const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-      console.log(payload.userId);
-      console.log(User.findOneById(payload.userId));
       return User.findOne({
         where: {
           id: payload.userId,
@@ -71,6 +69,7 @@ export class UserResolver {
   async logout(@Ctx() { res }: MyContext) {
     res.cookie("jid", "", {
       httpOnly: true,
+      path: "/refresh_token",
     });
     return true;
   }
@@ -122,6 +121,7 @@ export class UserResolver {
 
     res.cookie("jid", createRefreshToken(user), {
       httpOnly: true,
+      path: "/refresh_token",
     });
 
     return {
