@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Bye from "./pages/Bye";
+import Posts from "./pages/Posts";
 import { useEffect, useState } from "react";
 import { setAccessToken } from "./accessToken";
 import Header from "./Header";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/bye" element={<Bye />}></Route>
+        <Route path="/posts" element={<Posts />}></Route>
       </Routes>
     </BrowserRouter>
   );

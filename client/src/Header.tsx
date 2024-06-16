@@ -32,6 +32,9 @@ const Header: React.FC = () => {
         <Link to="/bye">Bye</Link>
       </div>
       <div>
+        <Link to="/posts">Posts</Link>
+      </div>
+      <div>
         {!loading && data && data.me && (
           <button
             onClick={async () => {

@@ -10,6 +10,7 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { User } from "./entity/User";
+import { Post } from "./entity/Post";
 import { compare, hash } from "bcryptjs";
 
 import { MyContext } from "./MyContext";
@@ -39,6 +40,11 @@ export class UserResolver {
     return `Your user Id is ${payload?.userId}`;
   }
 
+  @Query(() => [Post])
+  posts() {
+    return Post.find();
+  }
+
   @Query(() => [User])
   users() {
     return User.find();
@@ -63,6 +69,15 @@ export class UserResolver {
       console.log(err);
       return null;
     }
+  }
+
+  @Mutation(() => Boolean)
+  async addPost(@Arg("content", () => String) content: string) {
+    await Post.insert({
+      content,
+    });
+    console.log(content);
+    return true;
   }
 
   @Mutation(() => Boolean)
