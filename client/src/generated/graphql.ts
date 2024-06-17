@@ -67,6 +67,7 @@ export type MutationRevokeRefreshTokensForUserArgs = {
 
 export type Post = {
   __typename?: "Post";
+  author: User;
   content: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
 };
@@ -85,6 +86,12 @@ export type User = {
   email: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
 };
+
+export type AddPostMutationVariables = Exact<{
+  content: Scalars["String"]["input"];
+}>;
+
+export type AddPostMutation = { __typename?: "Mutation"; addPost: boolean };
 
 export type ByeQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -140,6 +147,51 @@ export type UsersQuery = {
   users: Array<{ __typename?: "User"; id: number; email: string }>;
 };
 
+export const AddPostDocument = gql`
+  mutation AddPost($content: String!) {
+    addPost(content: $content)
+  }
+`;
+export type AddPostMutationFn = Apollo.MutationFunction<
+  AddPostMutation,
+  AddPostMutationVariables
+>;
+
+/**
+ * __useAddPostMutation__
+ *
+ * To run a mutation, you first call `useAddPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostMutation, { data, loading, error }] = useAddPostMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useAddPostMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddPostMutation,
+    AddPostMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddPostMutation, AddPostMutationVariables>(
+    AddPostDocument,
+    options
+  );
+}
+export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
+export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
+export type AddPostMutationOptions = Apollo.BaseMutationOptions<
+  AddPostMutation,
+  AddPostMutationVariables
+>;
 export const ByeDocument = gql`
   query Bye {
     bye

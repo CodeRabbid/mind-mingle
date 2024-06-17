@@ -1,0 +1,3 @@
+mutation AddPost($content: String!) {
+  addPost(content: $content)
+}

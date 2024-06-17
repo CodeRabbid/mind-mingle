@@ -70,19 +70,30 @@ export class UserResolver {
       return null;
     }
   }
-
   @Mutation(() => Boolean)
-  async addPost(@Arg("content", () => String) content: string) {
-    const author = await User.findOne({ where: { id: 2 } });
-    if (author) {
-      await Post.insert({
-        content,
-        author,
+  @UseMiddleware(isAuth)
+  async addPost(
+    @Arg("content", () => String) content: string,
+    @Ctx() { payload }: MyContext
+  ) {
+    // console.log(content);
+    // console.log(payload);
+    // return true;
+    if (payload) {
+      const author = await User.findOne({
+        where: { id: Number(payload.userId) },
       });
-      return true;
-    } else {
-      return false;
+      if (author) {
+        await Post.insert({
+          content,
+          author,
+        });
+        return true;
+      } else {
+        return false;
+      }
     }
+    return false;
   }
 
   @Mutation(() => Boolean)
