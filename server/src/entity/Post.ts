@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -21,7 +21,7 @@ export class Post extends BaseEntity {
   content: string;
 
   @Field()
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   author: User;
 }

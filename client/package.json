@@ -19,6 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "@mui/joy": "^5.0.0-beta.36",
     "@mui/material": "^5.15.20",
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",

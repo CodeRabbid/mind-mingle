@@ -1,33 +1,40 @@
 import { useState } from "react";
 import { useAddPostMutation } from "../generated/graphql";
+import Textarea from "@mui/joy/Textarea";
+import { Button } from "@mui/material";
 
 const AddPost: React.FC = () => {
   const [content, setContent] = useState("");
   const [addPost] = useAddPostMutation();
   return (
     <div>
-      <textarea
+      <Textarea
         id="textarea"
-        rows={4}
-        cols={50}
+        minRows={2}
         onChange={(e) => {
           e.preventDefault();
           setContent(e.target.value);
         }}
-      ></textarea>
+      ></Textarea>
       <div>
-        <button
+        <Button
+          style={{ float: "right" }}
+          variant="outlined"
           onClick={async () => {
-            const response = await addPost({
-              variables: {
-                content,
-              },
-            });
-            console.log(response);
+            try {
+              const response = await addPost({
+                variables: {
+                  content,
+                },
+              });
+              console.log(response);
+            } catch (err) {
+              console.log(err);
+            }
           }}
         >
           Post
-        </button>
+        </Button>
       </div>
     </div>
   );

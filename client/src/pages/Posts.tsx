@@ -3,7 +3,7 @@ import { usePostsQuery } from "../generated/graphql";
 import "./Posts.css";
 
 const Posts: React.FC = () => {
-  const { data } = usePostsQuery();
+  const { data } = usePostsQuery({ fetchPolicy: "network-only" });
   return (
     <div>
       {data?.posts.map((user) => {
