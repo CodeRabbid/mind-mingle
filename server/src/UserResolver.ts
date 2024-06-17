@@ -73,11 +73,16 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async addPost(@Arg("content", () => String) content: string) {
-    await Post.insert({
-      content,
-    });
-    console.log(content);
-    return true;
+    const author = await User.findOne({ where: { id: 2 } });
+    if (author) {
+      await Post.insert({
+        content,
+        author,
+      });
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Mutation(() => Boolean)

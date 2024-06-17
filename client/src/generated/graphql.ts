@@ -40,10 +40,15 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  addPost: Scalars["Boolean"]["output"];
   login: LoginResponse;
   logout: Scalars["Boolean"]["output"];
   register: Scalars["Boolean"]["output"];
   revokeRefreshTokensForUser: Scalars["Boolean"]["output"];
+};
+
+export type MutationAddPostArgs = {
+  content: Scalars["String"]["input"];
 };
 
 export type MutationLoginArgs = {
@@ -60,11 +65,18 @@ export type MutationRevokeRefreshTokensForUserArgs = {
   userId: Scalars["Int"]["input"];
 };
 
+export type Post = {
+  __typename?: "Post";
+  content: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
+};
+
 export type Query = {
   __typename?: "Query";
   bye: Scalars["String"]["output"];
   hello: Scalars["String"]["output"];
   me?: Maybe<User>;
+  posts: Array<Post>;
   users: Array<User>;
 };
 
@@ -105,6 +117,13 @@ export type MeQueryVariables = Exact<{ [key: string]: never }>;
 export type MeQuery = {
   __typename?: "Query";
   me?: { __typename?: "User"; id: number; email: string } | null;
+};
+
+export type PostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PostsQuery = {
+  __typename?: "Query";
+  posts: Array<{ __typename?: "Post"; id: number; content: string }>;
 };
 
 export type RegisterMutationVariables = Exact<{
@@ -369,6 +388,66 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const PostsDocument = gql`
+  query Posts {
+    posts {
+      id
+      content
+    }
+  }
+`;
+
+/**
+ * __usePostsQuery__
+ *
+ * To run a query within a React component, call `usePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostsQuery(
+  baseOptions?: Apollo.QueryHookOptions<PostsQuery, PostsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<PostsQuery, PostsQueryVariables>(
+    PostsDocument,
+    options
+  );
+}
+export function usePostsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<PostsQuery, PostsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<PostsQuery, PostsQueryVariables>(
+    PostsDocument,
+    options
+  );
+}
+export function usePostsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<PostsQuery, PostsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<PostsQuery, PostsQueryVariables>(
+    PostsDocument,
+    options
+  );
+}
+export type PostsQueryHookResult = ReturnType<typeof usePostsQuery>;
+export type PostsLazyQueryHookResult = ReturnType<typeof usePostsLazyQuery>;
+export type PostsSuspenseQueryHookResult = ReturnType<
+  typeof usePostsSuspenseQuery
+>;
+export type PostsQueryResult = Apollo.QueryResult<
+  PostsQuery,
+  PostsQueryVariables
+>;
 export const RegisterDocument = gql`
   mutation Register($password: String!, $email: String!) {
     register(password: $password, email: $email)

@@ -7,6 +7,7 @@ import Posts from "./pages/Posts";
 import { useEffect, useState } from "react";
 import { setAccessToken } from "./accessToken";
 import Header from "./Header";
+import AddPost from "./pages/AddPost";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/bye" element={<Bye />}></Route>
         <Route path="/posts" element={<Posts />}></Route>
+        <Route path="/add-post" element={<AddPost />}></Route>
       </Routes>
     </BrowserRouter>
   );

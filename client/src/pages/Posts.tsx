@@ -1,7 +1,20 @@
 import React from "react";
+import { usePostsQuery } from "../generated/graphql";
+import "./Posts.css";
 
 const Posts: React.FC = () => {
-  return <div>Posts</div>;
+  const { data } = usePostsQuery();
+  return (
+    <div>
+      {data?.posts.map((user) => {
+        return (
+          <div key={user.id} className="post-box">
+            {user.content}
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Posts;

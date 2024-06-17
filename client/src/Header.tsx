@@ -35,6 +35,9 @@ const Header: React.FC = () => {
         <Link to="/posts">Posts</Link>
       </div>
       <div>
+        <Link to="/add-post">Add Post</Link>
+      </div>
+      <div>
         {!loading && data && data.me && (
           <button
             onClick={async () => {
