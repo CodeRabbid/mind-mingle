@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
+import Post from "./pages/Post";
 import { useEffect, useState } from "react";
 import { setAccessToken } from "./accessToken";
 import Header from "./Header";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/posts" element={<Posts />}></Route>
+        <Route path="/post/:id" element={<Post />}></Route>
         <Route path="/add-post" element={<AddPost />}></Route>
       </Routes>
     </BrowserRouter>
