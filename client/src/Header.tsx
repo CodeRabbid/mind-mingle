@@ -29,9 +29,6 @@ const Header: React.FC = () => {
         <Link to="/login">Login</Link>
       </div>
       <div>
-        <Link to="/bye">Bye</Link>
-      </div>
-      <div>
         <Link to="/posts">Posts</Link>
       </div>
       <div>
