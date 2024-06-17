@@ -1,0 +1,10 @@
+#header {
+  background-color: #fc8403;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 10px 20px;
+}
+
+.nav-button {
+  color: white;
+}
