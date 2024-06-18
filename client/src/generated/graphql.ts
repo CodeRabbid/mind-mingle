@@ -152,7 +152,7 @@ export type PostsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostsQuery = {
   __typename?: "Query";
-  posts: Array<{ __typename?: "Post"; id: number; content: string }>;
+  posts: Array<{ __typename?: "Post"; id: number; subject: string }>;
 };
 
 export type RegisterMutationVariables = Exact<{
@@ -518,7 +518,7 @@ export const PostsDocument = gql`
   query Posts {
     posts {
       id
-      content
+      subject
     }
   }
 `;

@@ -16,9 +16,9 @@ const Posts: React.FC = () => {
             <div
               style={{ whiteSpace: "pre-line" }}
               key={post.id}
-              className="post-box"
+              className="listed-post-box"
             >
-              {post.content}
+              {post.subject}
             </div>
           </Link>
         );
