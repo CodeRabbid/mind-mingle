@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetPostMutation } from "../generated/graphql";
 import { User } from "../classes/User";
+import "./Posts.css";
 
 const Post: React.FC = () => {
   const { id } = useParams();
@@ -19,8 +20,10 @@ const Post: React.FC = () => {
 
   return (
     <div>
-      {author.email}
-      {content}
+      <div className="reddit-font">{author.email}</div>
+      <div style={{ whiteSpace: "pre-line" }} className="post-box">
+        {content}
+      </div>
     </div>
   );
 };

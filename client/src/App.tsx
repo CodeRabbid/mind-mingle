@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { setAccessToken } from "./accessToken";
 import Header from "./Header";
 import AddPost from "./pages/AddPost";
+import MainContent from "./MainContent";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -31,12 +32,14 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/posts" element={<Posts />}></Route>
-        <Route path="/post/:id" element={<Post />}></Route>
-        <Route path="/add-post" element={<AddPost />}></Route>
+        <Route path="/" element={<MainContent />}>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/posts" element={<Posts />}></Route>
+          <Route path="/post/:id" element={<Post />}></Route>
+          <Route path="/add-post" element={<AddPost />}></Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );

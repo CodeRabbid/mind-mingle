@@ -101,7 +101,6 @@ export class UserResolver {
 
   @Mutation(() => Post)
   async getPost(@Arg("postId", () => String) postId: string) {
-    console.log(postId);
     try {
       const post = await Post.findOne({
         where: { id: Number(postId) },
