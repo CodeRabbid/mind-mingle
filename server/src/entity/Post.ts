@@ -18,6 +18,10 @@ export class Post extends BaseEntity {
 
   @Field()
   @Column()
+  subject: string;
+
+  @Field()
+  @Column()
   content: string;
 
   @Field()

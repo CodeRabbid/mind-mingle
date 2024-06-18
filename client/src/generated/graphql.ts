@@ -50,6 +50,7 @@ export type Mutation = {
 
 export type MutationAddPostArgs = {
   content: Scalars["String"]["input"];
+  subject: Scalars["String"]["input"];
 };
 
 export type MutationGetPostArgs = {
@@ -75,6 +76,7 @@ export type Post = {
   author: User;
   content: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
+  subject: Scalars["String"]["output"];
 };
 
 export type Query = {
@@ -94,6 +96,7 @@ export type User = {
 
 export type AddPostMutationVariables = Exact<{
   content: Scalars["String"]["input"];
+  subject: Scalars["String"]["input"];
 }>;
 
 export type AddPostMutation = { __typename?: "Mutation"; addPost: boolean };
@@ -110,6 +113,7 @@ export type GetPostMutation = {
   __typename?: "Mutation";
   getPost: {
     __typename?: "Post";
+    subject: string;
     content: string;
     author: { __typename?: "User"; email: string };
   };
@@ -166,8 +170,8 @@ export type UsersQuery = {
 };
 
 export const AddPostDocument = gql`
-  mutation AddPost($content: String!) {
-    addPost(content: $content)
+  mutation AddPost($content: String!, $subject: String!) {
+    addPost(content: $content, subject: $subject)
   }
 `;
 export type AddPostMutationFn = Apollo.MutationFunction<
@@ -189,6 +193,7 @@ export type AddPostMutationFn = Apollo.MutationFunction<
  * const [addPostMutation, { data, loading, error }] = useAddPostMutation({
  *   variables: {
  *      content: // value for 'content'
+ *      subject: // value for 'subject'
  *   },
  * });
  */
@@ -259,6 +264,7 @@ export type ByeQueryResult = Apollo.QueryResult<ByeQuery, ByeQueryVariables>;
 export const GetPostDocument = gql`
   mutation GetPost($postId: String!) {
     getPost(postId: $postId) {
+      subject
       content
       author {
         email

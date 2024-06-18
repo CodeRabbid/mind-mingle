@@ -75,6 +75,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   async addPost(
     @Arg("content", () => String) content: string,
+    @Arg("subject", () => String) subject: string,
     @Ctx() { payload }: MyContext
   ) {
     if (payload) {
@@ -84,6 +85,7 @@ export class UserResolver {
       if (author) {
         try {
           await Post.insert({
+            subject,
             content,
             author,
           });

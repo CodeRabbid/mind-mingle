@@ -1,5 +1,6 @@
 mutation GetPost($postId: String!) {
   getPost(postId: $postId) {
+    subject
     content
     author {
       email

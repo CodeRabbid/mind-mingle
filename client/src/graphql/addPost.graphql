@@ -1,3 +1,3 @@
-mutation AddPost($content: String!) {
-  addPost(content: $content)
+mutation AddPost($content: String!, $subject: String!) {
+  addPost(content: $content, subject: $subject)
 }
