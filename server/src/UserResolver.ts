@@ -76,16 +76,11 @@ export class UserResolver {
     @Arg("content", () => String) content: string,
     @Ctx() { payload }: MyContext
   ) {
-    console.log(content);
-    // console.log(payload);
-    // return true;
     if (payload) {
-      console.log("payload");
       const author = await User.findOne({
         where: { id: Number(payload.userId) },
       });
       if (author) {
-        console.log("author");
         try {
           await Post.insert({
             content,
