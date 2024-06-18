@@ -1,0 +1,8 @@
+mutation GetPost($postId: String!) {
+  getPost(postId: $postId) {
+    content
+    author {
+      email
+    }
+  }
+}

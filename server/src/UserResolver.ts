@@ -70,6 +70,7 @@ export class UserResolver {
       return null;
     }
   }
+
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async addPost(
@@ -96,6 +97,23 @@ export class UserResolver {
       }
     }
     return false;
+  }
+
+  @Mutation(() => Post)
+  async getPost(@Arg("postId", () => String) postId: string) {
+    console.log(postId);
+    try {
+      const post = await Post.findOne({
+        where: { id: Number(postId) },
+        relations: {
+          author: true,
+        },
+      });
+      return post;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   @Mutation(() => Boolean)
