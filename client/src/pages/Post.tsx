@@ -20,7 +20,7 @@ const Post: React.FC = () => {
 
   return (
     <div>
-      <div className="reddit-font">{author.email}</div>
+      <div className="username-container">Author: {author.email}</div>
       <div style={{ whiteSpace: "pre-line" }} className="post-box">
         {content}
       </div>
