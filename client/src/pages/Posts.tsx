@@ -13,7 +13,11 @@ const Posts: React.FC = () => {
             to={`/post/${post.id}`}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
-            <div key={post.id} className="post-box">
+            <div
+              style={{ whiteSpace: "pre-line" }}
+              key={post.id}
+              className="post-box"
+            >
               {post.content}
             </div>
           </Link>
