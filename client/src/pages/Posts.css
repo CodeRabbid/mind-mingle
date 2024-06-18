@@ -8,3 +8,10 @@
   padding: 8px 8px 8px 8px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.subject-container {
+  padding: 8px 8px 8px 8px;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

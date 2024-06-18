@@ -21,6 +21,10 @@ const Post: React.FC = () => {
   return (
     <div>
       <div className="username-container">Author: {author.email}</div>
+      <div className="subject-container">
+        This is a very cool subject for this very cool post. It tells what the
+        post is all about.
+      </div>
       <div style={{ whiteSpace: "pre-line" }} className="post-box">
         {content}
       </div>
