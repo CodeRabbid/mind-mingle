@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetPostMutation } from "../generated/graphql";
 import { User } from "../classes/User";
 import "./Posts.css";
+import { TextField } from "@mui/material";
 
 const Post: React.FC = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const Post: React.FC = () => {
       <div style={{ whiteSpace: "pre-line" }} className="post-box">
         {content}
       </div>
+      <TextField fullWidth placeholder="Commet..."></TextField>
     </div>
   );
 };
