@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "mutation AddPost($content: String!, $subject: String!) {\n  addPost(content: $content, subject: $subject)\n}": types.AddPostDocument,
+    "mutation AddPostComment($content: String!, $postId: Int!) {\n  addPostComment(content: $content, postId: $postId)\n}": types.AddPostCommentDocument,
     "query Bye {\n  bye\n}": types.ByeDocument,
     "mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n  }\n}": types.GetPostDocument,
     "query Hello {\n  hello\n}": types.HelloDocument,
@@ -43,6 +44,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation AddPost($content: String!, $subject: String!) {\n  addPost(content: $content, subject: $subject)\n}"): (typeof documents)["mutation AddPost($content: String!, $subject: String!) {\n  addPost(content: $content, subject: $subject)\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation AddPostComment($content: String!, $postId: Int!) {\n  addPostComment(content: $content, postId: $postId)\n}"): (typeof documents)["mutation AddPostComment($content: String!, $postId: Int!) {\n  addPostComment(content: $content, postId: $postId)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

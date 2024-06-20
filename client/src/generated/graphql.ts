@@ -41,6 +41,7 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: "Mutation";
   addPost: Scalars["Boolean"]["output"];
+  addPostComment: Scalars["Boolean"]["output"];
   getPost: Post;
   login: LoginResponse;
   logout: Scalars["Boolean"]["output"];
@@ -51,6 +52,11 @@ export type Mutation = {
 export type MutationAddPostArgs = {
   content: Scalars["String"]["input"];
   subject: Scalars["String"]["input"];
+};
+
+export type MutationAddPostCommentArgs = {
+  content: Scalars["String"]["input"];
+  postId: Scalars["Int"]["input"];
 };
 
 export type MutationGetPostArgs = {
@@ -100,6 +106,16 @@ export type AddPostMutationVariables = Exact<{
 }>;
 
 export type AddPostMutation = { __typename?: "Mutation"; addPost: boolean };
+
+export type AddPostCommentMutationVariables = Exact<{
+  content: Scalars["String"]["input"];
+  postId: Scalars["Int"]["input"];
+}>;
+
+export type AddPostCommentMutation = {
+  __typename?: "Mutation";
+  addPostComment: boolean;
+};
 
 export type ByeQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -214,6 +230,55 @@ export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
 export type AddPostMutationOptions = Apollo.BaseMutationOptions<
   AddPostMutation,
   AddPostMutationVariables
+>;
+export const AddPostCommentDocument = gql`
+  mutation AddPostComment($content: String!, $postId: Int!) {
+    addPostComment(content: $content, postId: $postId)
+  }
+`;
+export type AddPostCommentMutationFn = Apollo.MutationFunction<
+  AddPostCommentMutation,
+  AddPostCommentMutationVariables
+>;
+
+/**
+ * __useAddPostCommentMutation__
+ *
+ * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useAddPostCommentMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddPostCommentMutation,
+    AddPostCommentMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    AddPostCommentMutation,
+    AddPostCommentMutationVariables
+  >(AddPostCommentDocument, options);
+}
+export type AddPostCommentMutationHookResult = ReturnType<
+  typeof useAddPostCommentMutation
+>;
+export type AddPostCommentMutationResult =
+  Apollo.MutationResult<AddPostCommentMutation>;
+export type AddPostCommentMutationOptions = Apollo.BaseMutationOptions<
+  AddPostCommentMutation,
+  AddPostCommentMutationVariables
 >;
 export const ByeDocument = gql`
   query Bye {

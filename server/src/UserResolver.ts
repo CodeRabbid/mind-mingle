@@ -101,6 +101,29 @@ export class UserResolver {
     return false;
   }
 
+  @Mutation(() => Boolean)
+  //   @UseMiddleware(isAuth)
+  async addPostComment(
+    @Arg("postId", () => Int) postId: number,
+    @Arg("content", () => String) content: string
+    // @Ctx() { payload }: MyContext
+  ) {
+    // if (payload) {
+    //   const author = await User.findOne({
+    //     where: { id: Number(payload.userId) },
+    //   });
+    //   if (author) {
+    //  console.log(author)
+    console.log(postId);
+    console.log(content);
+    return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
+    return false;
+  }
+
   @Mutation(() => Post)
   async getPost(@Arg("postId", () => String) postId: string) {
     try {

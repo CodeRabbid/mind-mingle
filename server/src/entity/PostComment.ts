@@ -6,21 +6,16 @@ import {
   BaseEntity,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from "typeorm";
 import { User } from "./User";
-import { PostComment } from "./PostComment";
+import { Post } from "./Post";
 
 @ObjectType()
-@Entity("posts")
-export class Post extends BaseEntity {
+@Entity("postComment")
+export class PostComment extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Field()
-  @Column()
-  subject: string;
 
   @Field()
   @Column()
@@ -31,7 +26,8 @@ export class Post extends BaseEntity {
   @JoinColumn()
   author: User;
 
-  @Field(() => [PostComment])
-  @OneToMany(() => PostComment, (postComment: PostComment) => postComment.post)
-  comment: PostComment[];
+  @Field(() => Post)
+  @ManyToOne(() => Post)
+  @JoinColumn()
+  post: Post;
 }
