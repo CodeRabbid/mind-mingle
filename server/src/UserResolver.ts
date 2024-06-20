@@ -18,6 +18,7 @@ import { createAccessToken, createRefreshToken } from "./auth";
 import { isAuth } from "./isAuth";
 import { getConnection } from "typeorm";
 import { verify } from "jsonwebtoken";
+import { PostComment } from "./entity/PostComment";
 
 @ObjectType()
 class LoginResponse {
@@ -114,13 +115,18 @@ export class UserResolver {
     //   });
     //   if (author) {
     //  console.log(author)
-    console.log(postId);
-    console.log(content);
-    return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
+    let postComment = new PostComment();
+    postComment.content = content;
+
+    const post = await Post.findOne({ where: { id: postId } });
+    if (post) {
+      await PostComment.insert({
+        content,
+        post,
+      });
+      return true;
+    }
+
     return false;
   }
 
@@ -131,9 +137,26 @@ export class UserResolver {
         where: { id: Number(postId) },
         relations: {
           author: true,
+          comments: true,
         },
       });
       return post;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+  @Mutation(() => [PostComment])
+  async getPostComments(@Arg("postId", () => Int) postId: number) {
+    try {
+      const post = await Post.findOne({
+        where: { id: postId },
+        relations: {
+          comments: true,
+        },
+      });
+      return post?.comments;
     } catch (err) {
       console.log(err);
       return null;

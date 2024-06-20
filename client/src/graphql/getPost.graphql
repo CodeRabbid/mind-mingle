@@ -5,5 +5,8 @@ mutation GetPost($postId: String!) {
     author {
       email
     }
+    comments {
+      content
+    }
   }
 }

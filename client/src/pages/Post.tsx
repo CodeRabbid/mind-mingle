@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import { useGetPostMutation } from "../generated/graphql";
 import { User } from "../classes/User";
 import "./Posts.css";
+import "./Post.css";
 import { TextField } from "@mui/material";
+import { PostComment } from "../classes/PostComment";
 
 const Post: React.FC = () => {
   const { id } = useParams();
@@ -11,6 +13,7 @@ const Post: React.FC = () => {
   const [content, setContent] = useState("");
   const [subject, setSubject] = useState("");
   const [author, setAuthor] = useState(new User());
+  const [comments, setComments] = useState<Array<PostComment>>([]);
 
   useEffect(() => {
     (async () => {
@@ -18,6 +21,9 @@ const Post: React.FC = () => {
       setContent(data?.getPost.content!);
       setAuthor(data?.getPost.author!);
       setSubject(data?.getPost.subject!);
+      if (data?.getPost.comments) {
+        setComments(data?.getPost.comments);
+      }
     })();
   }, []);
 
@@ -28,7 +34,11 @@ const Post: React.FC = () => {
       <div style={{ whiteSpace: "pre-line" }} className="post-box">
         {content}
       </div>
-      <TextField fullWidth placeholder="Commet..."></TextField>
+      <TextField fullWidth placeholder="Add a comment"></TextField>
+      <div className="comments-label">Comments:</div>
+      {comments.map((comment) => (
+        <div className="comment-box">{comment.content}</div>
+      ))}
     </div>
   );
 };

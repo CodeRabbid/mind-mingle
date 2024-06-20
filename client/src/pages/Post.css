@@ -1,0 +1,12 @@
+.comment-box {
+  margin: 8px 0px 8px 0px;
+  padding: 8px 8px 8px 8px;
+  border: 1px solid lightgray;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.comments-label {
+  margin: 8px 0px 8px 0px;
+  padding: 8px 8px 8px 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

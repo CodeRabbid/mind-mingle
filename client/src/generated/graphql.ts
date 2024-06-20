@@ -43,6 +43,7 @@ export type Mutation = {
   addPost: Scalars["Boolean"]["output"];
   addPostComment: Scalars["Boolean"]["output"];
   getPost: Post;
+  getPostComments: Array<PostComment>;
   login: LoginResponse;
   logout: Scalars["Boolean"]["output"];
   register: Scalars["Boolean"]["output"];
@@ -63,6 +64,10 @@ export type MutationGetPostArgs = {
   postId: Scalars["String"]["input"];
 };
 
+export type MutationGetPostCommentsArgs = {
+  postId: Scalars["Int"]["input"];
+};
+
 export type MutationLoginArgs = {
   email: Scalars["String"]["input"];
   password: Scalars["String"]["input"];
@@ -80,9 +85,18 @@ export type MutationRevokeRefreshTokensForUserArgs = {
 export type Post = {
   __typename?: "Post";
   author: User;
+  comments: Array<PostComment>;
   content: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
   subject: Scalars["String"]["output"];
+};
+
+export type PostComment = {
+  __typename?: "PostComment";
+  author: User;
+  content: Scalars["String"]["output"];
+  id: Scalars["Int"]["output"];
+  post: Post;
 };
 
 export type Query = {
@@ -132,6 +146,7 @@ export type GetPostMutation = {
     subject: string;
     content: string;
     author: { __typename?: "User"; email: string };
+    comments: Array<{ __typename?: "PostComment"; content: string }>;
   };
 };
 
@@ -333,6 +348,9 @@ export const GetPostDocument = gql`
       content
       author {
         email
+      }
+      comments {
+        content
       }
     }
   }
