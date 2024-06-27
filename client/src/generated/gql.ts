@@ -16,7 +16,8 @@ const documents = {
     "mutation AddPost($content: String!, $subject: String!) {\n  addPost(content: $content, subject: $subject)\n}": types.AddPostDocument,
     "mutation AddPostComment($content: String!, $postId: Int!) {\n  addPostComment(content: $content, postId: $postId)\n}": types.AddPostCommentDocument,
     "query Bye {\n  bye\n}": types.ByeDocument,
-    "mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      content\n    }\n  }\n}": types.GetPostDocument,
+    "mutation GetComments($commentId: Int!) {\n  getComments(commentId: $commentId) {\n    id\n    content\n  }\n}": types.GetCommentsDocument,
+    "mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      id\n      content\n    }\n  }\n}": types.GetPostDocument,
     "query Hello {\n  hello\n}": types.HelloDocument,
     "mutation Login($password: String!, $email: String!) {\n  login(password: $password, email: $email) {\n    accessToken\n    user {\n      id\n      email\n    }\n  }\n}": types.LoginDocument,
     "mutation Logout {\n  logout\n}": types.LogoutDocument,
@@ -55,7 +56,11 @@ export function graphql(source: "query Bye {\n  bye\n}"): (typeof documents)["qu
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      content\n    }\n  }\n}"): (typeof documents)["mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      content\n    }\n  }\n}"];
+export function graphql(source: "mutation GetComments($commentId: Int!) {\n  getComments(commentId: $commentId) {\n    id\n    content\n  }\n}"): (typeof documents)["mutation GetComments($commentId: Int!) {\n  getComments(commentId: $commentId) {\n    id\n    content\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      id\n      content\n    }\n  }\n}"): (typeof documents)["mutation GetPost($postId: String!) {\n  getPost(postId: $postId) {\n    subject\n    content\n    author {\n      email\n    }\n    comments {\n      id\n      content\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,0 +1,6 @@
+mutation GetComments($commentId: Int!) {
+  getComments(commentId: $commentId) {
+    id
+    content
+  }
+}

@@ -40,14 +40,21 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  addCommentToComment: Scalars["Boolean"]["output"];
   addPost: Scalars["Boolean"]["output"];
   addPostComment: Scalars["Boolean"]["output"];
+  getComments: Array<PostComment>;
   getPost: Post;
   getPostComments: Array<PostComment>;
   login: LoginResponse;
   logout: Scalars["Boolean"]["output"];
   register: Scalars["Boolean"]["output"];
   revokeRefreshTokensForUser: Scalars["Boolean"]["output"];
+};
+
+export type MutationAddCommentToCommentArgs = {
+  commentId: Scalars["Int"]["input"];
+  content: Scalars["String"]["input"];
 };
 
 export type MutationAddPostArgs = {
@@ -58,6 +65,10 @@ export type MutationAddPostArgs = {
 export type MutationAddPostCommentArgs = {
   content: Scalars["String"]["input"];
   postId: Scalars["Int"]["input"];
+};
+
+export type MutationGetCommentsArgs = {
+  commentId: Scalars["Int"]["input"];
 };
 
 export type MutationGetPostArgs = {
@@ -94,9 +105,11 @@ export type Post = {
 export type PostComment = {
   __typename?: "PostComment";
   author: User;
+  comments: Array<PostComment>;
   content: Scalars["String"]["output"];
   id: Scalars["Int"]["output"];
   post: Post;
+  postComment: PostComment;
 };
 
 export type Query = {
@@ -135,6 +148,19 @@ export type ByeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ByeQuery = { __typename?: "Query"; bye: string };
 
+export type GetCommentsMutationVariables = Exact<{
+  commentId: Scalars["Int"]["input"];
+}>;
+
+export type GetCommentsMutation = {
+  __typename?: "Mutation";
+  getComments: Array<{
+    __typename?: "PostComment";
+    id: number;
+    content: string;
+  }>;
+};
+
 export type GetPostMutationVariables = Exact<{
   postId: Scalars["String"]["input"];
 }>;
@@ -146,7 +172,11 @@ export type GetPostMutation = {
     subject: string;
     content: string;
     author: { __typename?: "User"; email: string };
-    comments: Array<{ __typename?: "PostComment"; content: string }>;
+    comments: Array<{
+      __typename?: "PostComment";
+      id: number;
+      content: string;
+    }>;
   };
 };
 
@@ -341,6 +371,57 @@ export type ByeQueryHookResult = ReturnType<typeof useByeQuery>;
 export type ByeLazyQueryHookResult = ReturnType<typeof useByeLazyQuery>;
 export type ByeSuspenseQueryHookResult = ReturnType<typeof useByeSuspenseQuery>;
 export type ByeQueryResult = Apollo.QueryResult<ByeQuery, ByeQueryVariables>;
+export const GetCommentsDocument = gql`
+  mutation GetComments($commentId: Int!) {
+    getComments(commentId: $commentId) {
+      id
+      content
+    }
+  }
+`;
+export type GetCommentsMutationFn = Apollo.MutationFunction<
+  GetCommentsMutation,
+  GetCommentsMutationVariables
+>;
+
+/**
+ * __useGetCommentsMutation__
+ *
+ * To run a mutation, you first call `useGetCommentsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getCommentsMutation, { data, loading, error }] = useGetCommentsMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useGetCommentsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    GetCommentsMutation,
+    GetCommentsMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<GetCommentsMutation, GetCommentsMutationVariables>(
+    GetCommentsDocument,
+    options
+  );
+}
+export type GetCommentsMutationHookResult = ReturnType<
+  typeof useGetCommentsMutation
+>;
+export type GetCommentsMutationResult =
+  Apollo.MutationResult<GetCommentsMutation>;
+export type GetCommentsMutationOptions = Apollo.BaseMutationOptions<
+  GetCommentsMutation,
+  GetCommentsMutationVariables
+>;
 export const GetPostDocument = gql`
   mutation GetPost($postId: String!) {
     getPost(postId: $postId) {
@@ -350,6 +431,7 @@ export const GetPostDocument = gql`
         email
       }
       comments {
+        id
         content
       }
     }

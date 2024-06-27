@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetPostMutation } from "../generated/graphql";
+import {
+  useGetCommentsMutation,
+  useGetPostMutation,
+} from "../generated/graphql";
 import { User } from "../classes/User";
 import "./Posts.css";
 import "./Post.css";
@@ -9,11 +12,15 @@ import { PostComment } from "../classes/PostComment";
 
 const Post: React.FC = () => {
   const { id } = useParams();
+  const [getComments] = useGetCommentsMutation();
   const [getPost] = useGetPostMutation();
   const [content, setContent] = useState("");
   const [subject, setSubject] = useState("");
   const [author, setAuthor] = useState(new User());
   const [comments, setComments] = useState<Array<PostComment>>([]);
+  const [commentsComments, setCommentsComments] = useState<
+    Array<Array<PostComment>>
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -37,7 +44,25 @@ const Post: React.FC = () => {
       <TextField fullWidth placeholder="Add a comment"></TextField>
       <div className="comments-label">Comments:</div>
       {comments.map((comment) => (
-        <div className="comment-box">{comment.content}</div>
+        <div
+          className="comment-box"
+          onClick={async () => {
+            const { data } = await getComments({
+              variables: { commentId: comment.id },
+            });
+            let commentsCommentsCopy = [...commentsComments];
+            commentsCommentsCopy[comment.id] = data?.getComments!;
+            setCommentsComments(commentsCommentsCopy);
+          }}
+        >
+          {comment.content}
+          {comment.id}
+
+          {commentsComments[comment.id] &&
+            commentsComments[comment.id].map((comment) => (
+              <div className="comment-box">comment.content;</div>
+            ))}
+        </div>
       ))}
     </div>
   );

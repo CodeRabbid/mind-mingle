@@ -192,7 +192,6 @@ export class UserResolver {
           comments: true,
         },
       });
-      console.log(postComment);
       return postComment?.comments;
     } catch (err) {
       console.log(err);
