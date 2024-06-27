@@ -6,6 +6,7 @@ import {
   BaseEntity,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
 import { Post } from "./Post";
@@ -30,4 +31,17 @@ export class PostComment extends BaseEntity {
   @ManyToOne(() => Post)
   @JoinColumn()
   post: Post;
+
+  @Field(() => [PostComment])
+  @OneToMany(
+    () => PostComment,
+    (postComment: PostComment) => postComment.postComment
+  )
+  @JoinColumn()
+  comments: PostComment[];
+
+  @Field(() => PostComment)
+  @ManyToOne(() => PostComment)
+  @JoinColumn()
+  postComment: PostComment;
 }

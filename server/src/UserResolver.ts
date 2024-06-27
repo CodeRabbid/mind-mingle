@@ -130,6 +130,26 @@ export class UserResolver {
     return false;
   }
 
+  @Mutation(() => Boolean)
+  async addCommentToComment(
+    @Arg("commentId", () => Int) commentId: number,
+    @Arg("content", () => String) content: string
+  ) {
+    let postComment = new PostComment();
+    postComment.content = content;
+
+    const comment = await PostComment.findOne({ where: { id: commentId } });
+    if (comment) {
+      await PostComment.insert({
+        content,
+        postComment: comment,
+      });
+      return true;
+    }
+
+    return false;
+  }
+
   @Mutation(() => Post)
   async getPost(@Arg("postId", () => String) postId: string) {
     try {
@@ -157,6 +177,23 @@ export class UserResolver {
         },
       });
       return post?.comments;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+  @Mutation(() => [PostComment])
+  async getComments(@Arg("commentId", () => Int) commentId: number) {
+    try {
+      const postComment = await PostComment.findOne({
+        where: { id: commentId },
+        relations: {
+          comments: true,
+        },
+      });
+      console.log(postComment);
+      return postComment?.comments;
     } catch (err) {
       console.log(err);
       return null;
