@@ -34,7 +34,7 @@ const Comment: React.FC<IProps> = ({ comment }) => {
 
       {commentsComments[comment.id] &&
         commentsComments[comment.id].map((comment) => (
-          <Comment comment={comment}></Comment>
+          <Comment key={comment.id} comment={comment}></Comment>
         ))}
       <TextField fullWidth placeholder="Add a comment"></TextField>
     </div>
